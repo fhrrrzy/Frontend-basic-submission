@@ -141,6 +141,7 @@ const renderBookList = (isComplete, data) => {
     const idSection = isComplete ? "read-section" : "unread-section"
     const section = document.getElementById(idSection).querySelector('ul')
     section.innerHTML = ''
+    console.log(data)
     let listOfBooks = ``
     data.forEach(item => {
         let id = item.id
@@ -187,19 +188,12 @@ formAdd.addEventListener("submit", (event) => {
 })
 
 const createDummyBook = () => {
-    const data = [
-        {
-            id : 123,
-            title : "Moon",
-            author : "Me",
-            year : 1992,
-            isComplete : false
-        }
-    ]
+    const data = []
 
     localStorage.setItem("book_list", JSON.stringify(data))
 }
 
 
-
-// createDummyBook()
+if(!book.getBookFromLocal()){
+    createDummyBook()
+}
