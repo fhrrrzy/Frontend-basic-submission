@@ -143,3 +143,49 @@ const getBookFromLocal = () => {
     return JSON.parse(localStorage.getItem('book-list'))
 }
 
+const searchBookFromLocal = (word) => {
+    const bookData = getBookFromLocal
+    const keyword = word.toLowerCase()
+    const newBookData = bookData.filter(item => item.title.toLowerCase().startsWith(keyword))
+    return newBookData
+}
+
+const setBookToLocal = (data) => {
+    data = JSON.stringify(data)
+    localStorage.setItem('book-list', data)
+}
+
+const addBookToLocal = (data) => {
+    const bookData = getBookFromLocal
+    const newBookData = [...bookData, ...data]
+    setBookToLocal(newBookData)
+}
+
+const deleteBook = (id) => {
+    const bookData = getBookFromLocal
+    const newBookData = bookData.filter(item => item.id != id)
+    setBookToLocal(newBookData)
+}
+
+const getBookByStatus = (isComplete) => {
+    const bookData = getBookFromLocal
+    const bookDataByStatus = bookData.filter(item => item.isComplete == isComplete)
+    return bookDataByStatus
+}
+
+
+const renderBookByStatus = (isComplete) => {
+    const idSection = isComplete ? "read-section" : "unread-section"
+    const section = document.getElementById(idSection)
+    const data = getBookByStatus(isComplete)
+    let listOfBooks = ``
+    data.forEach(item => {
+        let id = item.id
+        let title = item.title
+        let author =  item.author
+        let year = item.year
+        let theBook = bookElement(id, title, author, year, isComplete)
+        listOfBooks += theBook
+    })
+    section.innerHTML = listOfBooks
+}
