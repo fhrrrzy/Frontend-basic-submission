@@ -143,15 +143,17 @@ const renderBookList = (isComplete, data) => {
     section.innerHTML = ''
     console.log(data)
     let listOfBooks = ``
-    data.forEach(item => {
-        let id = item.id
-        let title = item.title
-        let author =  item.author
-        let year = item.year
-        let theBook = bookElement(id, title, author, year, isComplete)
-        listOfBooks += theBook
-    })
-    section.innerHTML = listOfBooks
+    if(data.length > 0){
+        data.forEach(item => {
+            let id = item.id
+            let title = item.title
+            let author =  item.author
+            let year = item.year
+            let theBook = bookElement(id, title, author, year, isComplete)
+            listOfBooks += theBook
+        })
+        section.innerHTML = listOfBooks
+    }
 }
 
 /**
