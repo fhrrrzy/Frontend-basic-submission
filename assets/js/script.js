@@ -1,14 +1,23 @@
+import * as book from './book.js'
+
+console.log(book.getBookFromLocal())
 /**
  * display read or unread section based on radio tab
  */
-const displaySection = () => {
+const displaySection = (data = book.getBookByStatus(isComplete)) => {
+    const isComplete = getTabChecked()
+    const searchData = 
+    renderBookList(isComplete, data)
+}
+
+const getTabChecked = () => {
     const radioRead = document.getElementById("read")
     const readSection = document.getElementById("read-section")
 
     const radioUnread = document.getElementById("unread")
     const unreadSection = document.getElementById("unread-section")
-
-    if(radioRead.checked == true){
+    const isComplete = radioRead.checked == true
+    if(isComplete){
         readSection.style.display = "block"
         unreadSection.style.display = "none"
     }
@@ -16,7 +25,23 @@ const displaySection = () => {
         readSection.style.display = "none"
         unreadSection.style.display = "block"
     }
+    return isComplete
 }
+
+document.addEventListener("click", function(e){
+    if(e.target.closest('.delete-button')){
+        const id = e.target.closest('.delete-button').dataset.id
+        book.deleteBook(id)
+        alert("deleted successfully")
+        displaySection()
+    }
+    if(e.target.closest('.switch-button')){
+        const id = e.target.dataset.id
+        book.changeBookStatusById(id)
+        alert("switched successfully")
+        displaySection()
+    }
+})
 
 /**
  * apply function on these event
@@ -48,36 +73,13 @@ const modalShow = () => {
 const showModalBUtton = document.getElementById("show-modal-button")
 showModalBUtton.addEventListener("click", modalShow)
 
-/**
- * 
- * @returns object of form add input values
- */
-const getFormData = () => {
-    const id = Date.now()
-    const title = document.getElementById("judul").value
-    const author = document.getElementById("penulis").value
-    const year = document.getElementById("tahun").value
-    const isComplete = document.getElementById("new-book-read").checked
 
-    const payload = {
-        id : id,
-        title : title,
-        author : author,
-        year : year,
-        isComplete : isComplete
-    }
-
-    return payload
-}
-
-/**
- * 
- * @returns search value from search input form 
- */
-const getSearchInput = () => {
-    const searchValue = document.getElementById("search").value
-    return searchValue
-}
+const search = document.getElementById("search")
+search.addEventListener("keyup", ()=> {
+    let keyword = search.value
+    let data = book.searchBookFromLocal(keyword)
+    displaySection(data)
+})
 
 /**
  * 
@@ -105,7 +107,7 @@ const bookElement = (id, title, author, year, isComplete) => {
     <li class="my-3">
         <div class="w-full rounded-xl p-5 flex justify-between bg-white shadow-sm relative">
             <div class="">
-                <h2 class="text-lg text-slate-600">${title}</h2>
+                <h2 class2="text-xl mb-1 text-slate-600">${title}</h2>
                 <div class="text-slate-500 text-xs">${author} - ${year}</div>
             </div>
             <div class="my-auto">
@@ -122,62 +124,23 @@ const bookElement = (id, title, author, year, isComplete) => {
 }
 const finishedButtonElement = (id) => {
     return `
-    <button data-id=${id} class="finish-button inline-block px-2 py-1 m-1 bg-white rounded-md duration-300 hover:shadow-lg border-indigo-400 border-[1px] group hover:bg-indigo-400 text-xs text-indigo-400 hover:text-white my-auto">
+    <button data-id=${id} class="switch-button inline-block px-2 py-1 m-1 bg-white rounded-md duration-300 hover:shadow-lg border-indigo-400 border-[1px] group hover:bg-indigo-400 text-xs text-indigo-400 hover:text-white my-auto">
         Sudah Baca                                    
     </button>
     `
 }
 const unfinishedButtonElement = (id) => {
     return `
-    <button data-id=${id} class="unfinish-button inline-block px-2 py-1 m-1 bg-white rounded-md duration-300 hover:shadow-lg border-indigo-400 border-[1px] group hover:bg-indigo-400 text-xs text-indigo-400 hover:text-white my-auto">
+    <button data-id=${id} class="switch-button inline-block px-2 py-1 m-1 bg-white rounded-md duration-300 hover:shadow-lg border-indigo-400 border-[1px] group hover:bg-indigo-400 text-xs text-indigo-400 hover:text-white my-auto">
         Belum selesai baca                                    
     </button>
     `
 }
 
-/**
- * 
- * @returns json parsed from local storage json string
- */
-const getBookFromLocal = () => {
-    return JSON.parse(localStorage.getItem('book-list'))
-}
-
-const searchBookFromLocal = (word) => {
-    const bookData = getBookFromLocal
-    const keyword = word.toLowerCase()
-    const newBookData = bookData.filter(item => item.title.toLowerCase().startsWith(keyword))
-    return newBookData
-}
-
-const setBookToLocal = (data) => {
-    data = JSON.stringify(data)
-    localStorage.setItem('book-list', data)
-}
-
-const addBookToLocal = (data) => {
-    const bookData = getBookFromLocal
-    const newBookData = [...bookData, ...data]
-    setBookToLocal(newBookData)
-}
-
-const deleteBook = (id) => {
-    const bookData = getBookFromLocal
-    const newBookData = bookData.filter(item => item.id != id)
-    setBookToLocal(newBookData)
-}
-
-const getBookByStatus = (isComplete) => {
-    const bookData = getBookFromLocal
-    const bookDataByStatus = bookData.filter(item => item.isComplete == isComplete)
-    return bookDataByStatus
-}
-
-
-const renderBookByStatus = (isComplete) => {
+const renderBookList = (isComplete, data) => {
     const idSection = isComplete ? "read-section" : "unread-section"
-    const section = document.getElementById(idSection)
-    const data = getBookByStatus(isComplete)
+    const section = document.getElementById(idSection).querySelector('ul')
+    section.innerHTML = ''
     let listOfBooks = ``
     data.forEach(item => {
         let id = item.id
@@ -189,3 +152,54 @@ const renderBookByStatus = (isComplete) => {
     })
     section.innerHTML = listOfBooks
 }
+
+/**
+ * 
+ * @returns object of form add input values
+ */
+const getFormData = () => {
+    const id = Date.now()
+    const title = document.getElementById("judul").value
+    const author = document.getElementById("penulis").value
+    const year = document.getElementById("tahun").value
+    const isComplete = document.getElementById("new-book-read").checked
+
+    const data = {
+        id : id,
+        title : title,
+        author : author,
+        year : year,
+        isComplete : isComplete
+    }
+
+    return data
+}
+
+const formAdd = document.getElementById("from-add")
+formAdd.addEventListener("submit", (event) => {
+    event.preventDefault()
+    const data = getFormData()
+    console.log(data)
+    book.addBookToLocal(data)
+    alert("aight done added")
+    modalDismiss()
+    displaySection()
+})
+
+const createDummyBook = () => {
+    const data = [
+        {
+            id : 123,
+            title : "Moon",
+            author : "Me",
+            year : 1992,
+            isComplete : false
+        }
+    ]
+
+    localStorage.setItem("book_list", JSON.stringify(data))
+}
+
+
+
+// createDummyBook()

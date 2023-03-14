@@ -11,6 +11,7 @@
     <title>Bookshelf Submission</title>
 </head>
 <body class="font-poppins bg-slate-50">
+
     <div id="wrapper" class="p-5">
         <header class="w-full">
             <h1 class="font-semibold text-4xl text-slate-800">Bookshelf</h1>
@@ -32,16 +33,16 @@
                 <div class="flex justify-center gap-3">
                     <div class="">
                         <input type="radio" name="status" id="unread" class="hidden peer/unread" checked>
-                        <label for="unread" class="w-full rounded-xl bg-slate-50 border-[1px] px-3 py-2 hover:bg-slate-900 hover:text-slate-50 duration-300 cursor-pointer peer-checked/unread:bg-slate-900 peer-checked/unread:text-slate-50">Belum Dibaca</label>
+                        <label for="unread" class="w-full rounded-xl bg-slate-50 border-[1px] border-slate-900 px-3 py-2 hover:bg-slate-900 hover:text-slate-50 duration-300 cursor-pointer peer-checked/unread:bg-slate-900 peer-checked/unread:text-slate-50">Belum Dibaca</label>
                     </div>
                     <div class="">
                         <input type="radio" name="status" id="read" class="hidden peer/read">
-                        <label for="read" class="w-full rounded-xl bg-slate-50 border-[1px] px-3 py-2 hover:bg-slate-900 hover:text-slate-50 duration-300 cursor-pointer peer-checked/read:bg-slate-900 peer-checked/read:text-slate-50">Sudah Dibaca</label>
+                        <label for="read" class="w-full rounded-xl bg-slate-50 border-[1px] border-slate-900 px-3 py-2 hover:bg-slate-900 hover:text-slate-50 duration-300 cursor-pointer peer-checked/read:bg-slate-900 peer-checked/read:text-slate-50">Sudah Dibaca</label>
                     </div>
                 </div>
             </div>
             <section id="unread-section" class="w-full hidden">
-                <ul>
+                <ul class="list-none">
                     <li class="my-3">
                         <div class="w-full rounded-xl p-5 flex justify-between bg-white shadow-sm relative">
                             <div class="">
@@ -60,46 +61,10 @@
                           </button>
                         </div>
                     </li>
-                    <li class="my-3">
-                        <div class="w-full rounded-xl p-5 flex justify-between bg-white shadow-sm relative">
-                            <div class="">
-                                <h2 class="text-lg text-slate-600">How to dota</h2>
-                                <div class="text-slate-500 text-xs">Gaben - 2021</div>
-                            </div>
-                            <div class="my-auto">
-                                <button class="inline-block px-2 py-1 m-1 bg-white rounded-md duration-300 hover:shadow-lg border-indigo-400 border-[1px] group hover:bg-indigo-400 text-xs text-indigo-400 hover:text-white my-auto">
-                                    Sudah Baca                                    
-                                </button>
-                            </div>
-                            <button class="absolute -top-2 -right-2 p-1 rounded-full duration-300 hover:shadow-lg border-red-400 hover:bg-red-500 border-[1px] group bg-red-400">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 group-hover:stroke-white duration-300 stroke-white">
-                                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                                </svg>                            
-                          </button>
-                        </div>
-                    </li>
-                    <li class="my-3">
-                        <div class="w-full rounded-xl p-5 flex justify-between bg-white shadow-sm relative">
-                            <div class="">
-                                <h2 class="text-lg text-slate-600">S.O.L.I.D Principle</h2>
-                                <div class="text-slate-500 text-xs">Dicoding - 2025</div>
-                            </div>
-                            <div class="my-auto">
-                                <button class="inline-block px-2 py-1 m-1 bg-white rounded-md duration-300 hover:shadow-lg border-indigo-400 border-[1px] group hover:bg-indigo-400 text-xs text-indigo-400 hover:text-white my-auto">
-                                    Sudah Baca                                    
-                                </button>
-                            </div>
-                            <button class="absolute -top-2 -right-2 p-1 rounded-full duration-300 hover:shadow-lg border-red-400 hover:bg-red-500 border-[1px] group bg-red-400">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 group-hover:stroke-white duration-300 stroke-white">
-                                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                                </svg>                            
-                          </button>
-                        </div>
-                    </li>
                 </ul>
             </section>
             <section id="read-section" class="w-full hidden">
-                <ul>
+                <ul class="list-none">
                     <li class="my-3">
                         <div class="w-full rounded-xl p-5 flex justify-between bg-white shadow-sm relative">
                             <div class="">
@@ -158,11 +123,13 @@
             </section>
         </main>
     </div>
+
     <button id="show-modal-button" class="fixed bottom-5 right-5 bg-slate-800 p-4 rounded-full hover:bg-slate-900 duration-150">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 stroke-white">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
           </svg>   
     </button>
+
     <div id="modal-backdrop" class="fixed top-0 w-screen h-screen bg-black/10 backdrop-blur-md hidden">
         <div class="my-auto mx-auto p-5 shadow-lg bg-white rounded-md w-3/4 relative">
             <div class="card-icon absolute -top-20 -left-2 text-9xl">
@@ -177,7 +144,7 @@
                 <h2 class="font-semibold text-3xl">Tambah Buku Baru</h2>
             </div>
             <div class="card-body">
-                <form action="" class="my-5">
+                <form action="" class="my-5" id="from-add">
                     <div class="form-group w-full mb-2">
                         <label for="judul" class="w-full text-slate-600">Judul</label>
                         <input type="text" class="w-full border-2 rounded-md px-2 py-1 placeholder:text-sm text-slate-700" id="judul" placeholder="input judul buku">
@@ -191,11 +158,11 @@
                         <input type="number" max="2024" class="w-full border-2 rounded-md px-2 py-1 placeholder:text-sm text-slate-700 appearance-none" id="tahun" placeholder="ini tahun">
                     </div>
                     <div class="form-group  w-full mb-2 flex justify-start">.
-                        <div class="mr-5">
+                        <div class="mr-5 flex gap-1">
                             <input type="radio" name="new-book-status" class="" id="new-book-unread" checked>
                             <label for="new-book-unread">Belum dibaca</label>
                         </div>
-                        <div class="mr-5">
+                        <div class="mr-5 flex gap-1">
                             <input type="radio"  name="new-book-status" class="" id="new-book-read">
                             <label for="new-book-read">Sudah dibaca</label>
                         </div>
@@ -205,6 +172,7 @@
             </div>
         </div>
     </div>
-    <script src="assets/js/script.js"></script>
+
+    <script src="assets/js/script.js" type="module"></script>
 </body>
 </html>
